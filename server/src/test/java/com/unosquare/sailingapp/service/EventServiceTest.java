@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EventServiceTest {
@@ -73,6 +73,7 @@ public class EventServiceTest {
         assertThat(eventDTOListFixture).isNotNull();
         assertThat(classUnderTest.getAllEvents()).isNotNull();
         assertThat(eventDTOListFixture).hasSize(3);
+        verify(eventRepositoryMock, times(2)).findAll();
     }
 
     @Test
@@ -82,6 +83,7 @@ public class EventServiceTest {
 
         assertThat(eventDTOFixture).isNotNull();
         assertThat(classUnderTest.getEventByID(id)).isNotNull();
+        verify(eventRepositoryMock,times(1)).findById(id);
     }
 
     @Test
@@ -95,6 +97,7 @@ public class EventServiceTest {
 
         assertThat(createEventDTOFixture).isNotNull();
         assertThat(eventFixture.getName()).isEqualTo(createEventDTOFixture.getName());
+        verify(eventRepositoryMock, times(1)).save(eventFixture);
     }
 
     @Test
@@ -107,6 +110,8 @@ public class EventServiceTest {
 
         assertThat(updateEventViewModelFixture).isNotNull();
         assertThat(eventFixture.getName()).isEqualTo(updateEventViewModelFixture.getName());
+        verify(eventRepositoryMock, times(1)).findById(id);
+        verify(eventRepositoryMock, times(1)).save(eventFixture);
     }
 
 }
