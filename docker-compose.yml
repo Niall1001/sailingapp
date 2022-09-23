@@ -1,7 +1,6 @@
 version: "2"
 services:
   api:
-    profiles: [ "api" ]
     build:
       context: ./server
       dockerfile: Dockerfile
