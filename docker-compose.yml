@@ -1,5 +1,18 @@
-version: "3"
+version: "2"
 services:
+  api:
+    profiles: [ "api" ]
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      spring.datasource.url: "jdbc:postgresql://db:5432/sailing-app"
+      spring.datasource.username: "postgres"
+      spring.datasource.password: "password"
+    ports:
+      - "8090:8090"
+    depends_on:
+      - flyway
   db:
     image: postgres:latest
     restart: always
