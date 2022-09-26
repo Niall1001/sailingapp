@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AdminServiceTest {
@@ -59,17 +59,18 @@ public class AdminServiceTest {
     }
 
     @Test
-    public void getAllAdmins_ReturnsOk(){
+    public void getAllAdmins_WhenCalledWithValidData_ReturnsOk(){
         when(adminRepositoryMock.findAll()).thenReturn(adminListFixture);
         when(mapperMock.map(adminListFixture, AdminDTO.class)).thenReturn(adminDTOListFixture);
         classUnderTest.getAllAdmins();
 
         assertThat(classUnderTest.getAllAdmins()).isNotNull();
         assertThat(adminListFixture).hasSize(3);
+        verify(mapperMock, times(2)).map(adminListFixture, AdminDTO.class);
     }
 
     @Test
-    public void getAdminByID_ReturnsOk(){
+    public void getAdminByID_WhenCalledWithValidData_ReturnsOk(){
         when(adminRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(adminFixture));
         adminFixture.setUserId(3);
         when(mapperMock.map(adminFixture, AdminDTO.class)).thenReturn(adminDTOFixture);
@@ -77,10 +78,11 @@ public class AdminServiceTest {
 
         assertThat(adminDTOFixture).isNotNull();
         assertThat(classUnderTest.getAdminByID(id).getUserId()).isEqualTo(adminFixture.getUserId());
+        verify(mapperMock, times(2)).map(adminFixture, AdminDTO.class);
     }
 
     @Test
-    public void createAdmin_ReturnsOk(){
+    public void createAdmin_WhenCalledWithValidDetails_ReturnsOk(){
         when(mapperMock.map(createAdminDTOFixture, Admin.class)).thenReturn(adminFixture);
         adminFixture.setUserId(3);
         when(adminRepositoryMock.save(adminFixture)).thenReturn(adminFixture);
@@ -90,6 +92,8 @@ public class AdminServiceTest {
         assertThat(createAdminDTOFixture).isNotNull();
         assertThat(adminFixture).isNotNull();
         assertThat(createAdminDTOFixture.getUserId()).isEqualTo(adminFixture.getUserId());
+        verify(mapperMock, times(1)).map(createAdminDTOFixture, Admin.class);
+        verify(adminRepositoryMock, times(1)).save(adminFixture);
     }
 
 

@@ -65,7 +65,7 @@ public class EventServiceTest {
     }
 
     @Test
-    public void getAllEvents_ReturnsOk(){
+    public void getAllEvents_WhenCalledWithValidData_ReturnsOk(){
         when(eventRepositoryMock.findAll()).thenReturn(eventListFixture);
         when(mapperMock.map(eventListFixture, EventDTO.class)).thenReturn(eventDTOListFixture);
         classUnderTest.getAllEvents();
@@ -77,7 +77,7 @@ public class EventServiceTest {
     }
 
     @Test
-    public void getEventByID_ReturnsOk(){
+    public void getEventByID_WhenCalledWithValidData_ReturnsOk(){
         when(eventRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(eventFixture));
         when(mapperMock.map(eventFixture, EventDTO.class)).thenReturn(eventDTOFixture);
 
@@ -86,8 +86,10 @@ public class EventServiceTest {
         verify(eventRepositoryMock,times(1)).findById(id);
     }
 
+    
+
     @Test
-    public void createEvent_ReturnsOk(){
+    public void createEvent_WhenCalledWithValidData_ReturnsOk(){
         when(mapperMock.map(createEventDTOFixture, Event.class)).thenReturn(eventFixture);
         eventFixture.setName("Test Name");
         when(eventRepositoryMock.save(eventFixture)).thenReturn(eventFixture);
@@ -101,7 +103,7 @@ public class EventServiceTest {
     }
 
     @Test
-    public void updateEvent_ReturnsOk(){
+    public void updateEvent_WhenCalledWithValidData_ReturnsOk(){
         when(eventRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(eventFixture));
         eventFixture.setName("EDYC Event 4");
         when(eventRepositoryMock.save(eventFixture)).thenReturn(eventFixture);
