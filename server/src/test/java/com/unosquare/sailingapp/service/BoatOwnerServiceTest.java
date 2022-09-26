@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BoatOwnerServiceTest {
@@ -71,6 +71,7 @@ public class BoatOwnerServiceTest {
 
         assertThat(classUnderTest.getAllBoatOwners()).isNotNull();
         assertThat(boatOwnerListFixture).hasSize(3);
+        verify(boatOwnerRepositoryMock, times(2)).findAll();
     }
 
     @Test
@@ -80,6 +81,8 @@ public class BoatOwnerServiceTest {
 
 
         assertThat(classUnderTest.getBoatOwnerByID(id)).isNotNull();
+        verify(boatOwnerRepositoryMock, times(1)).findById(id);
+        verify(mapperMock, times(1)).map(boatOwnerListFixture, BoatOwnerDTO.class);
     }
 
     @Test
@@ -92,6 +95,7 @@ public class BoatOwnerServiceTest {
 
         assertThat(createBoatOwnerDTOFixture).isNotNull();
         assertThat(boatOwnerFixture.getBoatId()).isEqualTo(createBoatOwnerDTOFixture.getBoatId());
+        verify(mapperMock, times(1)).map(createBoatOwnerDTOFixture, BoatOwner.class);
 
     }
 

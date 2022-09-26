@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class AppUserServiceTest {
@@ -73,6 +73,7 @@ public class AppUserServiceTest {
 
         assertThat(classUnderTest.getAllAppUsers()).isNotNull();
         assertThat(appUserListFixture).hasSize(3);
+        verify(mapperMock, times(1)).map(appUserListFixture, AppUserDTO.class);
 
     }
 
@@ -83,6 +84,7 @@ public class AppUserServiceTest {
 
         assertThat(appUserDTOFixture).isNotNull();
         assertThat(classUnderTest.getAppUserByID(id)).isNotNull();
+        verify(appUserRepositoryMock, times(1)).findById(id);
     }
 
     @Test
@@ -98,6 +100,7 @@ public class AppUserServiceTest {
         assertThat(createAppUserDTOFixture).isNotNull();
         assertThat(createAppUserDTOFixture.getName()).isEqualTo(appUserFixture.getName());
         assertThat(createAppUserDTOFixture.getEmailAddress()).isEqualTo(appUserFixture.getEmailAddress());
+        verify(appUserRepositoryMock, times(1)).save(appUserFixture);
     }
 
     @Test
@@ -110,6 +113,8 @@ public class AppUserServiceTest {
 
         assertThat(updateAppUserViewModelFixture).isNotNull();
         assertThat(appUserFixture.getEmailAddress()).isEqualTo(updateAppUserViewModelFixture.getEmailAddress());
+        verify(appUserRepositoryMock, times(1)).findById(id);
+        verify(appUserRepositoryMock, times(1)).save(appUserFixture);
     }
 
     @Test
@@ -117,5 +122,6 @@ public class AppUserServiceTest {
         classUnderTest.deleteAppUser(id);
 
         assertThat(appUserRepositoryMock.findById(id)).isEmpty();
+        verify(appUserRepositoryMock, times(1)).deleteById(id);
     }
 }
