@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BoatServiceTest {
@@ -73,17 +73,18 @@ public class BoatServiceTest {
     }
 
     @Test
-    public void getAllBoats_ReturnsOk(){
+    public void getAllBoats_WhenCalledWithValidData_ReturnsOk(){
         when(boatRepositoryMock.findAll()).thenReturn(boatListFixture);
         when(mapperMock.map(boatListFixture, BoatDTO.class)).thenReturn(boatDTOListFixture);
         classUnderTest.getAllBoats();
 
         assertThat(classUnderTest.getAllBoats()).isNotNull();
         assertThat(boatDTOListFixture).hasSize(3);
+        verify(boatRepositoryMock, times(2)).findAll();
     }
 
     @Test
-    public void getBoatByID_ReturnsOk(){
+    public void getBoatByID_WhenCalledWithValidData_ReturnsOk(){
         when(boatRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(boatFixture));
         boatFixture.setSailNo("1956");
         when(mapperMock.map(boatFixture, BoatDTO.class)).thenReturn(boatDTOFixture);
@@ -93,6 +94,7 @@ public class BoatServiceTest {
         assertThat(boatFixture).isNotNull();
         assertThat(classUnderTest.getBoatByID(id)).isNotNull();
         assertThat(classUnderTest.getBoatByID(id).getSailNo()).isEqualTo(boatFixture.getSailNo());
+        verify(boatRepositoryMock, times(4)).findById(id);
     }
 
     @Test

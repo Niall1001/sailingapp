@@ -73,7 +73,7 @@ public class AppUserServiceTest {
 
         assertThat(classUnderTest.getAllAppUsers()).isNotNull();
         assertThat(appUserListFixture).hasSize(3);
-        verify(mapperMock, times(1)).map(appUserListFixture, AppUserDTO.class);
+        verify(mapperMock, times(2)).map(appUserListFixture, AppUserDTO.class);
 
     }
 
