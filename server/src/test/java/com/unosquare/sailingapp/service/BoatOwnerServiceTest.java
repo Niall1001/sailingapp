@@ -64,7 +64,7 @@ public class BoatOwnerServiceTest {
     }
 
     @Test
-    public void getAllBoatOwners_ReturnsOk(){
+    public void getAllBoatOwners_WhenCalledWithValidData_ReturnsOk(){
        when(boatOwnerRepositoryMock.findAll()).thenReturn(boatOwnerListFixture);
        when(mapperMock.map(boatOwnerListFixture, BoatOwnerDTO.class)).thenReturn(boatOwnerDTOListFixture);
        classUnderTest.getAllBoatOwners();
@@ -74,7 +74,7 @@ public class BoatOwnerServiceTest {
     }
 
     @Test
-    public void getBoatOwnerByID_ReturnsOk(){
+    public void getBoatOwnerByID_WhenCalledWithValidData_ReturnsOk(){
         when(boatOwnerRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(boatOwnerFixture));
         when(mapperMock.map(boatOwnerFixture, BoatOwnerDTO.class)).thenReturn(boatOwnerDTOFixture);
 
@@ -83,7 +83,7 @@ public class BoatOwnerServiceTest {
     }
 
     @Test
-    public void createBoatOwner_ReturnsOk(){
+    public void createBoatOwner_WhenCalledWithValidData_ReturnsOk(){
         when(mapperMock.map(createBoatOwnerDTOFixture, BoatOwner.class)).thenReturn(boatOwnerFixture);
         boatOwnerFixture.setBoatId(3);
         when(boatOwnerRepositoryMock.save(boatOwnerFixture)).thenReturn(boatOwnerFixture);

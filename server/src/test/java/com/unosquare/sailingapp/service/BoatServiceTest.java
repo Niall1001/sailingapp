@@ -96,7 +96,7 @@ public class BoatServiceTest {
     }
 
     @Test
-    public void createBoat_ReturnsOk(){
+    public void createBoat_WhenCalledWithValidData_ReturnsOk(){
         when(mapperMock.map(createBoatDTOFixture, Boat.class)).thenReturn(boatFixture);
         boatFixture.setName("Lizante");
         boatFixture.setAge(2004);
@@ -114,7 +114,7 @@ public class BoatServiceTest {
     }
 
     @Test
-    public void updateBoat_ReturnsOk(){
+    public void updateBoat_WhenCalledWithValidData_ReturnsOk(){
         when(boatRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(boatFixture));
         boatFixture.setName("Lizante");
         when(boatRepositoryMock.save(boatFixture)).thenReturn(boatFixture);
@@ -126,7 +126,7 @@ public class BoatServiceTest {
     }
 
     @Test
-    public void deleteBoat_ReturnsOk(){
+    public void deleteBoat_WhenCalledWithValidData_ReturnsOk(){
         classUnderTest.deleteBoat(id);
 
         assertThat(boatRepositoryMock.findById(id)).isEmpty();

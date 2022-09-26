@@ -69,7 +69,7 @@ public class EventBoatServiceTest {
     }
 
     @Test
-    public void getAllEventBoat_ReturnsOk(){
+    public void getAllEventBoat_WhenCalledWithValidData_ReturnsOk(){
         when(eventBoatRepositoryMock.findAll()).thenReturn(eventBoatListFixture);
         when(mapperMock.map(eventBoatListFixture, EventBoatDTO.class)).thenReturn(eventBoatDTOListFixture);
         classUnderTest.getAllEventBoats();
@@ -79,7 +79,7 @@ public class EventBoatServiceTest {
     }
 
     @Test
-    public void getEventBoatByID_ReturnsOk(){
+    public void getEventBoatByID_WhenCalledWithValidData_ReturnsOk(){
         when(eventBoatRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(eventBoatFixture));
         when(mapperMock.map(eventBoatFixture, EventBoatDTO.class)).thenReturn(eventBoatDTOFixture);
 
@@ -88,7 +88,7 @@ public class EventBoatServiceTest {
     }
 
     @Test
-    public void createEventBoat_ReturnsOk(){
+    public void createEventBoat_WhenCalledWithValidData_ReturnsOk(){
         when(mapperMock.map(createEventBoatDTOFixture, EventBoat.class)).thenReturn(eventBoatFixture);
         eventBoatFixture.setPosition(3);
         eventBoatFixture.setEventId(2);
@@ -102,7 +102,7 @@ public class EventBoatServiceTest {
     }
 
     @Test
-    public void updateEventBoat_ReturnsOk(){
+    public void updateEventBoat_WhenCalledWithValidData_ReturnsOk(){
         when(eventBoatRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(eventBoatFixture));
         eventBoatFixture.setPosition(3);
         when(eventBoatRepositoryMock.save(eventBoatFixture)).thenReturn(eventBoatFixture);
@@ -114,7 +114,7 @@ public class EventBoatServiceTest {
     }
 
     @Test
-    public void deleteEventBoat_ReturnsOk(){
+    public void deleteEventBoat_WhenCalledWithValidData_ReturnsOk(){
         classUnderTest.deleteEventBoat(id);
 
         assertThat(eventBoatRepositoryMock.findById(id).isEmpty());

@@ -61,7 +61,7 @@ public class CrewmateServiceTest {
     }
 
     @Test
-    public void getAllCrewMates_ReturnsOk(){
+    public void getAllCrewMates_WhenCalledWithValidData_ReturnsOk(){
         when(crewMateRepositoryMock.findAll()).thenReturn(crewMateListFixture);
         when(mapperMock.map(crewMateListFixture, CrewMateDTO.class)).thenReturn(crewMateDTOListFixture);
         classUnderTest.getAllCrewMates();
@@ -71,7 +71,7 @@ public class CrewmateServiceTest {
     }
 
     @Test
-    public void getCrewMateByID_ReturnsOk(){
+    public void getCrewMateByID_WhenCalledWithValidData_ReturnsOk(){
         when(crewMateRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(crewMateFixture));
         when(mapperMock.map(crewMateFixture, CrewMateDTO.class)).thenReturn(crewMateDTOFixture);
 
@@ -80,7 +80,7 @@ public class CrewmateServiceTest {
     }
 
     @Test
-    public void createCrewMate_ReturnsOk(){
+    public void createCrewMate_WhenCalledWithValidData_ReturnsOk(){
         when(mapperMock.map(createCrewMateDTOFixture, CrewMate.class)).thenReturn(crewMateFixture);
         crewMateFixture.setUserId(3);
         when(crewMateRepositoryMock.save(crewMateFixture)).thenReturn(crewMateFixture);

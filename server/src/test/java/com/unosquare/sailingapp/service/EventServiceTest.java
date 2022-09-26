@@ -86,7 +86,7 @@ public class EventServiceTest {
         verify(eventRepositoryMock,times(1)).findById(id);
     }
 
-    
+
 
     @Test
     public void createEvent_WhenCalledWithValidData_ReturnsOk(){

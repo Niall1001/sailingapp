@@ -66,7 +66,7 @@ public class AppUserServiceTest {
     }
 
     @Test
-    public void getAllAppUsers_ReturnsOk(){
+    public void getAllAppUsers_WhenCalledWithValidData_ReturnsOk(){
         when(appUserRepositoryMock.findAll()).thenReturn(appUserListFixture);
         when(mapperMock.map(appUserListFixture, AppUserDTO.class)).thenReturn(appUserDTOListFixture);
         classUnderTest.getAllAppUsers();
@@ -77,7 +77,7 @@ public class AppUserServiceTest {
     }
 
     @Test
-    public void getAppUsersByID_ReturnsOk(){
+    public void getAppUsersByID_WhenCalledWithValidData_ReturnsOk(){
         when(appUserRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(appUserFixture));
         when(mapperMock.map(appUserFixture, AppUserDTO.class)).thenReturn(appUserDTOFixture);
 
@@ -86,7 +86,7 @@ public class AppUserServiceTest {
     }
 
     @Test
-    public void createAppUser_ReturnsOk(){
+    public void createAppUser_WhenCalledWithValidData_ReturnsOk(){
         when(mapperMock.map(createAppUserDTOFixture, AppUser.class)).thenReturn(appUserFixture);
         appUserFixture.setName("Niall Walters");
         appUserFixture.setEmailAddress("niallwalters135@gmail.com");
@@ -101,7 +101,7 @@ public class AppUserServiceTest {
     }
 
     @Test
-    public void updateAppUser_ReturnsOk(){
+    public void updateAppUser_WhenCalledWithValidData_ReturnsOk(){
         when(appUserRepositoryMock.findById(id)).thenReturn(Optional.ofNullable(appUserFixture));
         appUserFixture.setEmailAddress("niallwalters135@gmail.com");
         when(appUserRepositoryMock.save(appUserFixture)).thenReturn(appUserFixture);
@@ -113,7 +113,7 @@ public class AppUserServiceTest {
     }
 
     @Test
-    public void deleteAppUser_ReturnsOk(){
+    public void deleteAppUser_WhenCalledWithValidData_ReturnsOk(){
         classUnderTest.deleteAppUser(id);
 
         assertThat(appUserRepositoryMock.findById(id)).isEmpty();
