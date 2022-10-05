@@ -1,5 +1,6 @@
 package com.unosquare.sailingapp.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,12 @@ public class GlobalExceptionHandler {
             IllegalArgumentException.class})
     public ResponseEntity<ErrorResponse> handleInternalServerError(final Exception exception) {
         return ExceptionBuilder.buildErrorResponseRepresentation(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+    }
+
+    @ExceptionHandler({
+            ExpiredJwtException.class})
+    public ResponseEntity<ErrorResponse> handleExpiredJTWException(final Exception exception) {
+        return ExceptionBuilder.buildErrorResponseRepresentation(HttpStatus.FORBIDDEN, exception.getMessage());
     }
 
 }

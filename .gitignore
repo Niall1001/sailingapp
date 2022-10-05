@@ -3,3 +3,5 @@
 /server/build/
 .idea/
 /server/.gradle/
+/frontend/node_modules
+/frontend/
