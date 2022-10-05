@@ -8,6 +8,7 @@ import com.unosquare.sailingapp.exception.ResourceNotFoundException;
 import com.unosquare.sailingapp.model.UpdateAppUserViewModel;
 import com.unosquare.sailingapp.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class AppUserService {
     private final AppUserRepository appUserRepository;
     private final Mapper mapper;
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     public List<AppUserDTO> getAllAppUsers(){
         final List<AppUser> appUserList = appUserRepository.findAll();
         final List<AppUserDTO> appUserDTOList = mapper.map(appUserList, AppUserDTO.class);
@@ -32,6 +34,7 @@ public class AppUserService {
 
     public AppUserDTO createAppUser(final CreateAppUserDTO createAppUserDTO){
         final AppUser appUser = mapper.map(createAppUserDTO, AppUser.class);
+        appUser.setPassword(bCryptPasswordEncoder.encode(createAppUserDTO.getPassword()));
         appUserRepository.save(appUser);
         return mapper.map(appUser, AppUserDTO.class);
     }
