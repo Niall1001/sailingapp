@@ -1,8 +1,7 @@
 package com.unosquare.sailingapp.configuration;
 
+import static com.unosquare.sailingapp.constant.AppConstants.ACTIVE;
 import static com.unosquare.sailingapp.constant.AppConstants.ADMIN;
-import static com.unosquare.sailingapp.constant.AppConstants.DEV;
-
 import com.unosquare.sailingapp.security.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +28,7 @@ public class WebSecurityConfiguration {
                 httpSecurity.csrf().disable().authorizeRequests()
                         .antMatchers(HttpMethod.POST, "/app-users/create").permitAll()
                         .antMatchers(HttpMethod.POST, "/v1/login").permitAll()
-                        .antMatchers(HttpMethod.GET, "/actuator/**").hasAnyAuthority(ADMIN, DEV)
+                        .antMatchers(HttpMethod.GET, "/actuator/**").hasAnyAuthority(ADMIN, ACTIVE)
                         .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/v3/api-docs**").permitAll()
                         .antMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()

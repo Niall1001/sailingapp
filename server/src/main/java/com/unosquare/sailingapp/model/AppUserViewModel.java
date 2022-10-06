@@ -21,4 +21,5 @@ public class AppUserViewModel {
     private String emailAddress;
     private Date dob;
     private String password;
+    private UserAccessStatusViewModel userAccessStatus;
 }

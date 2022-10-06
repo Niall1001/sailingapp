@@ -11,6 +11,7 @@ import java.util.Collection;
 @Getter
 @Setter
 public class CustomUserDetails extends User {
+
     @Serial
     private static final long serialVersionUID = 7027723211089349611L;
 

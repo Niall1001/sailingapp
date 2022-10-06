@@ -12,6 +12,7 @@ import com.unosquare.sailingapp.model.AppUserViewModel;
 import com.unosquare.sailingapp.model.CreateAppUserViewModel;
 import com.unosquare.sailingapp.model.CreateEventViewModel;
 import com.unosquare.sailingapp.model.UpdateAppUserViewModel;
+import com.unosquare.sailingapp.security.AppUserSecurity;
 import com.unosquare.sailingapp.service.AppUserService;
 import com.unosquare.sailingapp.util.ResourceUtility;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,6 +59,8 @@ public class AppUserControllerTest {
     private AppUserService appUserServiceMock;
     @Mock
     private Mapper mapperMock;
+    @Mock
+    private AppUserSecurity appUserSecurity;
     @BeforeEach
     public void setup() {
 
@@ -73,7 +76,7 @@ public class AppUserControllerTest {
 
 
         mockMvc = MockMvcBuilders.standaloneSetup(
-                        new AppUserController(appUserServiceMock, mapperMock))
+                        new AppUserController(appUserServiceMock, mapperMock, appUserSecurity))
                 .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                 .setViewResolvers((viewName, locale) -> new MappingJackson2JsonView())
                 .build();

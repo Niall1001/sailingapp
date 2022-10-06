@@ -1,8 +1,7 @@
 package com.unosquare.sailingapp.security;
 
-import static com.unosquare.sailingapp.constant.AppConstants.ADMIN;
-import static com.unosquare.sailingapp.constant.AppConstants.DEV;
 import com.unosquare.sailingapp.entity.AppUser;
+import com.unosquare.sailingapp.exception.UnauthorizedException;
 import com.unosquare.sailingapp.repository.AppUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import static com.unosquare.sailingapp.constant.AppConstants.*;
 
 @Service
 @AllArgsConstructor
@@ -34,17 +35,18 @@ public class UserSecurityService implements UserDetailsService {
     }
 
     private UserDetails getUserDetails(final AppUser currentUser) {
-        switch (currentUser.getEmailAddress()) {
+        switch (currentUser.getUserAccessStatus().getStatus()) {
+            case ACTIVE:
             case ADMIN:
-            case DEV:
+            case BOAT_OWNER:
+                return new CustomUserDetails(
+                        currentUser.getId(), currentUser.getEmailAddress(), currentUser.getPassword(), getAuthorities(currentUser));
+            default:
+                throw new UnauthorizedException(NOT_PERMITTED);
         }
-        return new CustomUserDetails(
-                currentUser.getId(), currentUser.getEmailAddress(), currentUser.getPassword(), getAuthorities(currentUser)) {
-        };
-
-        }
+    }
 
     private Collection<? extends GrantedAuthority> getAuthorities(final AppUser currentUser) {
-        return List.of(new SimpleGrantedAuthority(currentUser.getName()));
+        return List.of(new SimpleGrantedAuthority(currentUser.getUserAccessStatus().getStatus()));
 }
 }

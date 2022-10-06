@@ -45,4 +45,10 @@ public class GlobalExceptionHandler {
         return ExceptionBuilder.buildErrorResponseRepresentation(HttpStatus.FORBIDDEN, exception.getMessage());
     }
 
+    @ExceptionHandler({
+            UnauthorizedException.class})
+    public ResponseEntity<ErrorResponse> handleUnauthorizedException(final Exception exception) {
+        return ExceptionBuilder.buildErrorResponseRepresentation(HttpStatus.FORBIDDEN, exception.getMessage());
+    }
+
 }

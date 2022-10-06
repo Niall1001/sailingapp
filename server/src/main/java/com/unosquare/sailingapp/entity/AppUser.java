@@ -27,4 +27,7 @@ public class AppUser {
     private Date dob;
     @Column(name = "password")
     private String password;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_access_status_id", nullable = false)
+    private UserAccessStatus userAccessStatus;
 }

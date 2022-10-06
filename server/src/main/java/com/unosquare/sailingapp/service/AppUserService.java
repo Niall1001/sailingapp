@@ -4,6 +4,7 @@ import com.unosquare.sailingapp.configuration.Mapper;
 import com.unosquare.sailingapp.dto.AppUserDTO;
 import com.unosquare.sailingapp.dto.CreateAppUserDTO;
 import com.unosquare.sailingapp.entity.AppUser;
+import com.unosquare.sailingapp.entity.UserAccessStatus;
 import com.unosquare.sailingapp.exception.ResourceNotFoundException;
 import com.unosquare.sailingapp.model.UpdateAppUserViewModel;
 import com.unosquare.sailingapp.repository.AppUserRepository;
@@ -11,15 +12,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AppUserService {
+
+    private static final int STAGED_USER_STATUS = 1;
+    private static final int ACTIVE_USER_STATUS = 2;
+    private static final String USER_NOT_FOUND = "User not found";
     private final AppUserRepository appUserRepository;
     private final Mapper mapper;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final EntityManager entityManager;
     public List<AppUserDTO> getAllAppUsers(){
         final List<AppUser> appUserList = appUserRepository.findAll();
         final List<AppUserDTO> appUserDTOList = mapper.map(appUserList, AppUserDTO.class);
@@ -35,6 +42,7 @@ public class AppUserService {
     public AppUserDTO createAppUser(final CreateAppUserDTO createAppUserDTO){
         final AppUser appUser = mapper.map(createAppUserDTO, AppUser.class);
         appUser.setPassword(bCryptPasswordEncoder.encode(createAppUserDTO.getPassword()));
+        appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, ACTIVE_USER_STATUS));
         appUserRepository.save(appUser);
         return mapper.map(appUser, AppUserDTO.class);
     }

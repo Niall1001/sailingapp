@@ -1,16 +1,21 @@
 package com.unosquare.sailingapp.controller;
 
+import static com.unosquare.sailingapp.constant.AppConstants.ALIAS_CURRENT_USER;
+
 import com.unosquare.sailingapp.configuration.Mapper;
 import com.unosquare.sailingapp.dto.AppUserDTO;
 import com.unosquare.sailingapp.dto.CreateAppUserDTO;
+import com.unosquare.sailingapp.entity.AppUser;
 import com.unosquare.sailingapp.model.AppUserViewModel;
 import com.unosquare.sailingapp.model.CreateAppUserViewModel;
 import com.unosquare.sailingapp.model.UpdateAppUserViewModel;
+import com.unosquare.sailingapp.security.AppUserSecurity;
 import com.unosquare.sailingapp.service.AppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,6 +29,7 @@ public class AppUserController {
 
     private final AppUserService appUserService;
     private final Mapper mapper;
+    private final AppUserSecurity appUser;
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<AppUserViewModel>> GetAllAppUsers(){
@@ -32,6 +38,10 @@ public class AppUserController {
         return ResponseEntity.ok(appUserViewModelList);
     }
 
+    @GetMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<AppUserViewModel> getCurrentAppUserProfile(){
+        return ResponseEntity.ok(getAppUser(ALIAS_CURRENT_USER));
+    }
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity GetAppUsersById(@PathVariable final int id){
         AppUserDTO appUserDTO = appUserService.getAppUserByID(id);
@@ -57,5 +67,14 @@ public class AppUserController {
     public ResponseEntity DeleteAppUserById(@PathVariable final int id) {
         appUserService.deleteAppUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private AppUserViewModel getAppUser(final int userId) {
+        final AppUserDTO appUserDTO = appUserService.getAppUserByID(getCurrentId(userId));
+        return mapper.map(appUserDTO, AppUserViewModel.class);
+    }
+
+    private int getCurrentId(final int userId) {
+        return userId == ALIAS_CURRENT_USER ? appUser.get().getId() : userId;
     }
 }

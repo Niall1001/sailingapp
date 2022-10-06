@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Integer> {
 
-    @Query("SELECT au FROM AppUser au WHERE au.emailAddress = ?1")
+    @Query("SELECT au FROM AppUser au JOIN FETCH au.userAccessStatus WHERE au.emailAddress = ?1")
     Optional<AppUser> findAppUserByEmail(String emailAddress);
 }

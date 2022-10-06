@@ -15,4 +15,5 @@ public class AppUserDTO {
     private String emailAddress;
     private Date dob;
     private String password;
+    private GrabUserAccessStatusDTO userAccessStatus;
 }
