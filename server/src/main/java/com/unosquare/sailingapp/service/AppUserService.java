@@ -19,7 +19,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AppUserService {
 
-    private static final int STAGED_USER_STATUS = 1;
+    private static final int ADMIN_USER = 3;
+    private static final int BOAT_OWNER_USER = 4;
+    private static final int CREW_USER = 5;
     private static final int ACTIVE_USER_STATUS = 2;
     private static final String USER_NOT_FOUND = "User not found";
     private final AppUserRepository appUserRepository;
@@ -42,7 +44,14 @@ public class AppUserService {
     public AppUserDTO createAppUser(final CreateAppUserDTO createAppUserDTO){
         final AppUser appUser = mapper.map(createAppUserDTO, AppUser.class);
         appUser.setPassword(bCryptPasswordEncoder.encode(createAppUserDTO.getPassword()));
-        appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, ACTIVE_USER_STATUS));
+        if(createAppUserDTO.getUser_type() == 1)
+            appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, ADMIN_USER));
+        else if(createAppUserDTO.getUser_type() == 2)
+            appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, BOAT_OWNER_USER));
+        else if(createAppUserDTO.getUser_type() == 3)
+            appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, CREW_USER));
+        else
+            appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, ACTIVE_USER_STATUS));
         appUserRepository.save(appUser);
         return mapper.map(appUser, AppUserDTO.class);
     }

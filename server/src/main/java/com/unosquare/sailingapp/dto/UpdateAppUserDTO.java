@@ -10,4 +10,5 @@ public class UpdateAppUserDTO {
     private String emailAddress;
     private Date dob;
     private String password;
+    private int user_type;
 }

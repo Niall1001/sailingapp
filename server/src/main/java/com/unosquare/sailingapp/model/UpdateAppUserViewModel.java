@@ -25,4 +25,5 @@ public class UpdateAppUserViewModel {
     @NotEmpty
     @Size(min = 1, max = 255)
     private String password;
+    private int user_type;
 }

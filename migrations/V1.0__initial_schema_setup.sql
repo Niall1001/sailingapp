@@ -9,6 +9,7 @@ name VARCHAR(255) NOT NULL,
 email_address VARCHAR(255) NOT NULL, 
 dob DATE NOT NULL, 
 password VARCHAR(255) NOT NULL,
+user_type integer NOT NULL,
 user_access_status_id integer NOT NULL REFERENCES user_access_status(id)
 );
 
