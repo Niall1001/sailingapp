@@ -3,16 +3,14 @@ VALUES ('STAGED');
 INSERT INTO user_access_status(status) 
 VALUES ('ACTIVE');
 INSERT INTO user_access_status(status) 
-VALUES ('SUSPENDED');
-INSERT INTO user_access_status(status) 
-VALUES ('LOCKED_OUT');
-INSERT INTO user_access_status(status) 
 VALUES ('ADMIN');
 INSERT INTO user_access_status(status) 
-VALUES ('DEV');
+VALUES ('BOAT_OWNER');
+INSERT INTO user_access_status(status) 
+VALUES ('CREW');
 
 INSERT INTO app_user (name, email_address, dob, password, user_access_status_id)
-VALUES ('Niall Walters', 'niallwalters135@gmail.com', '1998-10-25', 'Password135', '1'); 
+VALUES ('Niall Walters', 'niallwalters135@gmail.com', '1998-10-25', 'Password135', '2'); 
 INSERT INTO app_user (name, email_address, dob, password, user_access_status_id)
 VALUES ('Sarah Jennings', 'sarahjennings1@gmail.com', '2001-01-23', 'Password15', '2'); 
 INSERT INTO app_user (name, email_address, dob, password, user_access_status_id)
@@ -22,9 +20,9 @@ VALUES ('James Regan', 'jregan10@gmail.com', '1968-04-23', 'JamesPassword13', '4
 INSERT INTO app_user (name, email_address, dob, password, user_access_status_id)
 VALUES ('James Curran', 'jjcurran01@gmail.com', '1976-04-05', 'JamesPassword13', '5');
 INSERT INTO app_user (name, email_address, dob, password, user_access_status_id)
-VALUES ('David Maxwell', 'dmaxwell4@gmail.com', '1965-03-06', 'Admin101', '6'); 
+VALUES ('David Maxwell', 'dmaxwell4@gmail.com', '1965-03-06', 'Admin101', '5'); 
 INSERT INTO app_user (name, email_address, dob, password, user_access_status_id)
-VALUES ('Stephen Walters', 'walters3147@gmail.com', '1967-08-03', 'Password14', '6'); 
+VALUES ('Stephen Walters', 'walters3147@gmail.com', '1967-08-03', 'Password14', '5'); 
 
 INSERT INTO boat(name, sail_no, boat_class, age, description)
 VALUES ('Lizante', '1967', 'NHC 1', '2007', 'Jeanneau Sun Oddessey'); 
