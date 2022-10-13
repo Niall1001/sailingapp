@@ -1,11 +1,8 @@
 package com.unosquare.sailingapp.controller;
 
-import static com.unosquare.sailingapp.constant.AppConstants.ALIAS_CURRENT_USER;
-
 import com.unosquare.sailingapp.configuration.Mapper;
 import com.unosquare.sailingapp.dto.AppUserDTO;
 import com.unosquare.sailingapp.dto.CreateAppUserDTO;
-import com.unosquare.sailingapp.entity.AppUser;
 import com.unosquare.sailingapp.model.AppUserViewModel;
 import com.unosquare.sailingapp.model.CreateAppUserViewModel;
 import com.unosquare.sailingapp.model.UpdateAppUserViewModel;
@@ -15,11 +12,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static com.unosquare.sailingapp.constant.AppConstants.ALIAS_CURRENT_USER;
 
 
 @RestController

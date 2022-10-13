@@ -39,8 +39,9 @@ public class UserSecurityService implements UserDetailsService {
             case ACTIVE:
             case ADMIN:
             case BOAT_OWNER:
+            case CREW:
                 return new CustomUserDetails(
-                        currentUser.getId(), currentUser.getEmailAddress(), currentUser.getPassword(), getAuthorities(currentUser));
+                        currentUser.getId(), currentUser.getEmailAddress(), currentUser.getPassword() ,getAuthorities(currentUser));
             default:
                 throw new UnauthorizedException(NOT_PERMITTED);
         }

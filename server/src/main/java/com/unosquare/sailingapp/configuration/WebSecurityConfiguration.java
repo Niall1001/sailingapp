@@ -32,7 +32,7 @@ public class WebSecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/v3/api-docs**").permitAll()
                         .antMatchers(HttpMethod.GET, "/v3/api-docs/**").permitAll()
-                        //.anyRequest().authenticated()
+                        .anyRequest().authenticated()
                         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
