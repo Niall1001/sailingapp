@@ -7,7 +7,7 @@ import {
   Login,
   Register
 } from "./pages";
-import { TokenUtils } from "./utils";
+import { LoginUtils } from "./utils";
 import { Navigation } from "./constants";
 import { Navbar } from "./components";
 
@@ -70,7 +70,7 @@ const UnAuthenticatedRoutes = () => {
 };
 
 function App() {
-  const loggedIn = TokenUtils.isLoggedIn();
+  const loggedIn = LoginUtils.isLoggedIn();
 
 
 

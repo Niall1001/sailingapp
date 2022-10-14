@@ -4,7 +4,7 @@ import { Paper } from '@mui/material';
 
 const Container = (crew) => {
 	return (
-	  <div style={{ height: "500px", width: "400px", margin: "32px" }}>
+	  <div style={{ height: "500px", width: "400px", marginLeft: "25px", marginRight: "25px" }}>
 		<Paper style={{ height: "100%", width: "400px", margin: "16px" }}>{crew.name}</Paper>
 	  </div>
 	);
@@ -37,7 +37,7 @@ const Events = () => {
     if (error) return <div>Something went wrong</div>;
     if (!crew) return <div>Crew not found :(</div>;
 	return (
-		<div style={{ width: "100%", overflow: "auto", display: "flex" }}>
+		<div style={{ width: "100%", overflow: "scroll", display: "flex" }}>
             {crew.map(({ ...crew }) => (
               <Container {...crew}/>
             ))}

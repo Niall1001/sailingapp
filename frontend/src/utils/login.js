@@ -1,5 +1,20 @@
 import jwtDecode from "jwt-decode";
 
+const isTokenExpired = (token) => {
+  if (!token || !token.access || !token.refresh) return true;
+
+  const accessToken = jwtDecode(token.access);
+  const currentTime = new Date().getTime() / 1000;
+
+  if (currentTime < accessToken.exp) return false;
+
+  const refreshToken = jwtDecode(token.refresh);
+
+  if (currentTime < refreshToken.exp) return false;
+
+  return true;
+};
+
 const isLoggedIn = () => {
   const jwt = localStorage.getItem("jwt")
 
@@ -24,6 +39,7 @@ const Logout = () => {
 }
 
 const TokenUtils = {
+  isTokenExpired,
   isLoggedIn,
   Logout,
 };

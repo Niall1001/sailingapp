@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
-import { sailingApi } from '../../services';
+import { sailingApi, TokenService } from '../../services';
 import { useNavigate } from 'react-router-dom';
+import { LoginUtils } from '../../utils';
+import { AuthContext } from '../../contexts';
+import { Navigation } from "../../constants";
 
 
-const Login = () => {
+    const Login = () => {
     const initialCredentialsState = {
         emailAddress: '',
         password: '',
         isLoading: false,
     };
 
+    const LoggedIn = LoginUtils.isLoggedIn();
     const [credentials, setCredentials] = useState(initialCredentialsState);
     const resetFormState = ({...initialCredentialsState});
     const navigate = useNavigate();
-    const [submitted, setSubmitted] = useState(false);
+    const { dispatch } = AuthContext.useLogin();
 
     const onChange = (e) => {
         const { id, value } = e.target;
@@ -23,36 +27,33 @@ const Login = () => {
         });
     };
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
+    const loginClicked = async () => {
         setCredentials({ ...credentials, isLoading: true });
         try {
             const {
                 data: { jwt },
             } = await sailingApi.appUsers.login({ emailAddress: credentials.emailAddress, password: credentials.password });
-            localStorage.setItem('jwt', jwt);
-            setSubmitted(true);
-            navigate("/home");
-
-        } catch (e) {
-            alert('something went wrong!');
-            console.error(e);
-            resetFormState();
-        } finally {
-            setCredentials({
-                ...credentials,
-                isLoading: false,
+        TokenService.setAuth(jwt);
+        navigate(Navigation.HOME);
+      }catch (e) {
+        alert('Wrong login Details provided! Please try again');
+        console.error(e);
+        resetFormState();
+    } finally {
+        setCredentials({
+            ...credentials,
+            isLoading: false,
             });
         }
     };
 
 	return (
-        <form onSubmit={onSubmit}>
+        <form>
             <label htmlFor='emailAddress'>Email:</label>
             <input type='email' id='emailAddress' onChange={onChange} disabled={credentials.isLoading} />
             <label htmlFor='password'>Password:</label>
             <input type='password' id='password' onChange={onChange} disabled={credentials.isLoading} />
-            <button onClick={onSubmit} disabled={credentials.isLoading}>Login</button>
+            <button onClick={async () => await loginClicked()} disabled={credentials.isLoading}>Login</button>
         </form>
     );
 

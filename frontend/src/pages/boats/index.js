@@ -1,14 +1,22 @@
 import React, {useEffect, useState} from "react";
 import { sailingApi } from "../../services";
+import { Paper } from '@mui/material';
 
+const Container = (boat) => {
+	return (
+	  <div style={{ height: "500px", width: "400px", marginLeft: "25px", marginRight: "25px" }}>
+		<Paper style={{ height: "100%", width: "400px", margin: "16px" }}>{boat.name}</Paper>
+	  </div>
+	);
+  };
 const Boats = () => {
 	const [boat, setBoat] = useState();
 	const [isLoading, setLoading] = useState();
 	const [error, setError] = useState();
 
-	const getBoat = async (id)=>{
+	const getBoats = async (id)=>{
 		try{
-			const {data} = await sailingApi.boats.getOne(1);
+			const {data} = await sailingApi.boats.getMany();
 			setBoat(data);
 			console.log(data);
 		}catch(error){
@@ -21,23 +29,18 @@ const Boats = () => {
 	}
 
 	useEffect(() => {
-		getBoat(1)
+		getBoats()
 	},[]);
 
 	if (isLoading) return <div>Loading</div>;
     if (error) return <div>Something went wrong</div>;
     if (!boat) return <div>Boat not found :(</div>;
 	return (
-        <div>
-            <div className='boats-text'>
-                <p>{boat.name}</p>
-                <p>{boat.age}</p>
-                <p>{boat.boatClass}</p>
-				<p>{boat.description}</p>
-				<p>{boat.id}</p>
-				<p>{boat.sailNo}</p>
-            </div>
-        </div>
+        <div style={{ width: "100%", overflow: "scroll", display: "flex" }}>
+            {boat.map(({ ...boat }) => (
+              <Container {...boat}/>
+            ))}
+		</div>
     );
 };
 

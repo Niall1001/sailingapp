@@ -1,17 +1,25 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import { TokenUtils } from '../utils';
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { LoginUtils } from '../utils';
+import { AuthContext } from "../contexts";
+
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
+import React from "react";
+import { TokenService } from "../services";
+import navigation from "../constants/navigation";
+
 
 const Authpages = [
   {
@@ -23,13 +31,13 @@ const Authpages = [
     url: "/events",
   },
   {
-    name: "Crews",
-    url: "/crews",
-  },
-  {
     name: "Boats",
     url: "/boats",
   },
+  {
+    name: "Crews",
+    url: "/crews",
+  }
 ];
 
 const UnAuthpages = [
@@ -40,54 +48,79 @@ const UnAuthpages = [
   {
     name: "Register",
     url: "/register",
-  },
-
+  }
 ];
 
-const LogoutPage = [
+const crew_settings = [
+  {
+    name: "Profile",
+    url: "/profile",
+  },
   {
     name: "Logout",
     url: "/login",
-  },
+  }
 ];
 
-const Logout = () => {
-  const loggedOut = TokenUtils.Logout();
-  const navigate = NavLink();
-  
-  navigate("/login");
-}
-
 const Navbar = () => {
-  const loggedIn = TokenUtils.isLoggedIn();
+  const { state, dispatch } = AuthContext.useLogin();
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const Logout = () => {  
+    navigate(navigation.LOGIN);
+    setIsLoggedIn(false);
+    TokenService.removeAuth();
+  }
+
+  React.useEffect(() => {
+    const loggedIn = TokenService.getAuth();
+    setIsLoggedIn(loggedIn);
+    handleCloseUserMenu();
+    
+    }, [state]);
+
   return (
-    <AppBar position="static" style={{ background: "#FFFFFF" }} elevation={0}>
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
-            style={{ color: "#0000FF" }}
             variant="h6"
             noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
           >
-            <NavLink to="/" style={{ textDecoration: "none" }}>
-            </NavLink>
+            Sailing Application
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              style={{ color: "#83314E" }}
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -95,104 +128,111 @@ const Navbar = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon style={{ color: "#83314E" }} />
+              <MenuIcon />
             </IconButton>
             <Menu
-              style={{ color: "#83314E" }}
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: 'top',
+                horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: 'block', md: 'none' },
               }}
             >
-              {Authpages.map(({ name, url }) => (
-                <NavLink
-                  to={url}
-                  style={{ textDecoration: "none", color: "#83314E" }}
+            </Menu>
+          </Box>
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            Sailing Application
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {isLoggedIn ? Authpages.map(({ name, url }) => (
+              <NavLink
+              to={url}
+              style={{ textDecoration: "none", color: "#83314E" }}
+            >
+               <Button
+               key={name}
+               onClick={handleCloseNavMenu}
+               sx={{ my: 2, color: 'white', display: 'block' }}
+             >
+               {name}
+             </Button>
+             </NavLink>
+            )) : UnAuthpages.map(({ name, url }) => (
+              <NavLink
+              to={url}
+              style={{ textDecoration: "none", color: "#83314E" }}
+              >
+                <Button
+                key={name}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                  <MenuItem key={name} onClick={handleCloseNavMenu}>
-                    {name}
+                  {name}
+                </Button>
+             </NavLink>
+            ))} 
+          </Box>
+          {isLoggedIn ? 
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp"/>
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {crew_settings.map(({name, url}) => (
+                <NavLink
+                to={url}
+                style={{ textDecoration: "none", color: "#83314E" }}
+                >
+                  <MenuItem key={name} onClick={Logout} onClose={handleCloseUserMenu}>
+                    <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
                 </NavLink>
               ))}
             </Menu>
-          </Box>
-          <Typography
-            style={{ color: "#83314E" }}
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            <NavLink
-              to="/"
-              style={{ textDecoration: "none", color: "#83314E" }}
-            >
-            </NavLink>
-          </Typography>
-          <Box
-            className="nav"
-            style={{ textDecoration: "none", color: "#0000FF" }}
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-          >
-            {!loggedIn && UnAuthpages.map(({ name, url }) => (
-              <NavLink to={url} style={{ textDecoration: "none" }}>
-                <Button
-                  style={{ color: "#83314E", textDecoration: "none" }}
-                  key={name}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {name}
-                </Button>
-              </NavLink>
-            ))}
-          </Box>
-          <Box
-            className="nav"
-            style={{ textDecoration: "none", color: "#0000FF" }}
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-          >
-            {loggedIn && Authpages.map(({ name, url }) => (
-              <NavLink to={url} style={{ textDecoration: "none" }}>
-                <Button
-                  style={{ color: "#83314E", textDecoration: "none" }}
-                  key={name}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {name}
-                </Button>
-              </NavLink>
-            ))}
-          </Box>
-          <Box
-            className="nav"
-            style={{ textDecoration: "none", color: "#0000FF" }}
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
-          >
-            {loggedIn && LogoutPage.map(({ name, url }) => (
-              <NavLink to={url} style={{ textDecoration: "none" }}>
-                <Button
-                  onClick={Logout}
-                  style={{ color: "#83314E", textDecoration: "none" }}
-                  key={name}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {name}
-                </Button>
-              </NavLink>
-            ))}
-          </Box>
+          </Box>: <div></div>}
         </Toolbar>
       </Container>
     </AppBar>

@@ -1,14 +1,19 @@
 const getAuth = () => {
     const auth = localStorage.getItem("jwt");
-    if (!auth) return null;
-  
-    return JSON.parse(auth);
+    
+    if(auth){
+    return true;
+    }else{
+    return false;
+    }
   };
   
-  const setAuth = (auth) => {
-    if (auth) {
-      localStorage.setItem("jwt", JSON.stringify(auth));
-    }
+  const setAuth = (jwt) => {
+      localStorage.setItem("jwt", jwt);
+      const auth = localStorage.getItem("jwt");
+      if (!auth) return false;
+  
+    return true;
   };
   
   const removeAuth = () => {
