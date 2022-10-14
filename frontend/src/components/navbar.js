@@ -91,9 +91,10 @@ const Navbar = () => {
   }
 
   React.useEffect(() => {
-    const loggedIn = TokenService.getAuth();
-    setIsLoggedIn(loggedIn);
+    const loggedIn = state.access;
     handleCloseUserMenu();
+    console.log(loggedIn);
+    setIsLoggedIn(loggedIn);
     
     }, [state]);
 

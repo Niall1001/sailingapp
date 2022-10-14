@@ -1,11 +1,7 @@
 const getAuth = () => {
     const auth = localStorage.getItem("jwt");
     
-    if(auth){
-    return true;
-    }else{
-    return false;
-    }
+    return auth;
   };
   
   const setAuth = (jwt) => {

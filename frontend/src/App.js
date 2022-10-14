@@ -7,10 +7,10 @@ import {
   Login,
   Register
 } from "./pages";
-import { LoginUtils } from "./utils";
 import { Navigation } from "./constants";
 import { Navbar } from "./components";
-
+import { AuthContext } from "./contexts";
+import { useState, useEffect } from "react";
 
 const AuthenticatedRoutes = () => {
   return (
@@ -70,16 +70,20 @@ const UnAuthenticatedRoutes = () => {
 };
 
 function App() {
-  const loggedIn = LoginUtils.isLoggedIn();
-
-
+  const { state, dispatch } = AuthContext.useLogin();
+  const [loggedIn, setLoggedIn] = useState(false);
+  
+  
+  useEffect(() => {
+    const loggedIn = state.access;
+    setLoggedIn(loggedIn);
+    }, [state]);
 
   return (
     <div className="app">
       <Navbar />
       <Routes>
-      {loggedIn && AuthenticatedRoutes()}
-      {!loggedIn && UnAuthenticatedRoutes()}
+      {loggedIn ? AuthenticatedRoutes() : UnAuthenticatedRoutes()}
       </Routes>
     </div>
   );

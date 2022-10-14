@@ -9,6 +9,7 @@ const Container = (boat) => {
 	  </div>
 	);
   };
+
 const Boats = () => {
 	const [boat, setBoat] = useState();
 	const [isLoading, setLoading] = useState();

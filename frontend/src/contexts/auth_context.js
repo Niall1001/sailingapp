@@ -8,7 +8,7 @@ function authReducer(state, action) {
       case "login": {
         return {
           ...state,
-          access: action.access,
+          access: action.jwt,
         };
       }
       case "logout": {

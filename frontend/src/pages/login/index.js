@@ -17,7 +17,7 @@ import { Navigation } from "../../constants";
     const [credentials, setCredentials] = useState(initialCredentialsState);
     const resetFormState = ({...initialCredentialsState});
     const navigate = useNavigate();
-    const { dispatch } = AuthContext.useLogin();
+    const { state, dispatch } = AuthContext.useLogin();
 
     const onChange = (e) => {
         const { id, value } = e.target;
@@ -34,6 +34,10 @@ import { Navigation } from "../../constants";
                 data: { jwt },
             } = await sailingApi.appUsers.login({ emailAddress: credentials.emailAddress, password: credentials.password });
         TokenService.setAuth(jwt);
+        dispatch({
+            type: "login",
+            jwt,
+          });
         navigate(Navigation.HOME);
       }catch (e) {
         alert('Wrong login Details provided! Please try again');
