@@ -25,6 +25,25 @@ const isLoggedIn = () => {
   return true;
 };
 
+const isAdminUser = (access) => {
+  //if(typeof access !== "string" || !access) return false;
+  //const {user_role_id} = jwtDecode(access);
+  console.log(access)
+  //return user_role_id === 1;
+}
+
+const isBoatOwnerUser = (access) => {
+  if(typeof access !== "string" || !access) return false;
+  const {user_role_id} = jwtDecode(access);
+  return user_role_id === 2;
+}
+
+const isCrewUser = (access) => {
+  if(typeof access !== "string" || !access) return false;
+  const {user_role_id} = jwtDecode(access);
+  return user_role_id === 3;
+}
+
 const Logout = () => {
   //check there isnt needed an if statement here
   const jwt = localStorage.removeItem("jwt")

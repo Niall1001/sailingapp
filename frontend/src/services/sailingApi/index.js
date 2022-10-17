@@ -7,7 +7,7 @@ const boats = {
         return await AxiosInstance(`${BASE_URL.sailingApi}/boats/${id}`)
     },
     async getMany() {
-        return await axios.get(`${BASE_URL.sailingApi}/boats/`)
+        return await AxiosInstance(`${BASE_URL.sailingApi}/boats/`)
     },
     async createOne(body) {
         return await axios.post(`${BASE_URL.sailingApi}/boats/create`)
