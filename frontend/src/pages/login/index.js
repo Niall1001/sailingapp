@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { LoginUtils } from '../../utils';
 import { AuthContext } from '../../contexts';
 import { Navigation } from "../../constants";
-
+import "./login.css";
 
     const Login = () => {
     const initialCredentialsState = {
@@ -52,15 +52,16 @@ import { Navigation } from "../../constants";
     };
 
 	return (
-        <form>
-            <label htmlFor='emailAddress'>Email:</label>
-            <input type='email' id='emailAddress' onChange={onChange} disabled={credentials.isLoading} />
-            <label htmlFor='password'>Password:</label>
-            <input type='password' id='password' onChange={onChange} disabled={credentials.isLoading} />
-            <button onClick={async () => await loginClicked()} disabled={credentials.isLoading}>Login</button>
+    
+        <div class="wrapper">
+        <form class="form-signin">       
+          <h2 class="form-signin-heading">Please login</h2>
+          <input type="email" id='emailAddress' class="form-control" onChange={onChange} placeholder="Email Address" required="" autofocus=""  disabled={credentials.isLoading} />
+          <input type="password" id='password' class="form-control" onChange={onChange} name="password" placeholder="Password" required=""  disabled={credentials.isLoading}/>      
+          <button onClick={async () => await loginClicked()} class="btn btn-lg btn-primary btn-block" disabled={credentials.isLoading}>Login</button>   
         </form>
+      </div>
     );
-
 };
 
 export default Login;

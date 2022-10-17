@@ -106,7 +106,6 @@ const Navbar = () => {
             variant="h6"
             noWrap
             component="a"
-            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -126,7 +125,6 @@ const Navbar = () => {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
               color="inherit"
             >
               <MenuIcon />

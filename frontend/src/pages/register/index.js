@@ -31,6 +31,7 @@ const Register = () => {
         try {
             debugger;
             await sailingApi.appUsers.regsiter({ name: credentials.name ,emailAddress: credentials.emailAddress, dob: credentials.dob, password: credentials.password, user_type: credentials.user_type });
+            alert('Successfully Registered!');
             navigate("/login");
         } catch (e) {
             alert('something went wrong!');
@@ -45,19 +46,17 @@ const Register = () => {
     };
 
 	return (
-        <form onSubmit={onSubmit}>
-            <label htmlFor='name'>Name:</label>
-            <input type='name' id='name' onChange={onChange} disabled={credentials.isLoading} />
-            <label htmlFor='emailAddress'>Email:</label>
-            <input type='email' id='emailAddress' onChange={onChange} disabled={credentials.isLoading} />
-            <label htmlFor='dob'>DOB:</label>
-            <input type="date" id='dob' onChange={onChange} disabled={credentials.isLoading} />
-            <label htmlFor='password'>Password:</label>
-            <input type='password' id='password' onChange={onChange} disabled={credentials.isLoading} />
-            <label htmlFor='user_type'>User type:</label>
-            <input type='user_type' id='user_type' onChange={onChange} disabled={credentials.isLoading} />
-            <button onClick={onSubmit} disabled={credentials.isLoading}>Register</button>
+        <div class="wrapper">
+        <form class="form-signin">       
+          <h2 class="form-signin-heading">Please Register</h2>
+          <input class="form-control" type='name' id='name' placeholder="Name" onChange={onChange} disabled={credentials.isLoading} />
+            <input class="form-control" type='email' id='emailAddress' placeholder="Email" onChange={onChange} disabled={credentials.isLoading} />
+            <input class="form-control" type="date" id='dob' placeholder="DOB" onChange={onChange} disabled={credentials.isLoading} />
+            <input class="form-control" type='password' id='password' placeholder="Password" onChange={onChange} disabled={credentials.isLoading} />
+            <input class="form-control" type='usertype' id='user_type' placeholder="Usertype (1 - Admin, 2 - Crew, 3 - Boat Owner)" onChange={onChange} disabled={credentials.isLoading} />
+            <button class="btn btn-lg btn-primary btn-block" onClick={onSubmit} disabled={credentials.isLoading}>Register</button>
         </form>
+      </div>
     );
 
 };

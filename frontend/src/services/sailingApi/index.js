@@ -30,7 +30,11 @@ const appUsers = {
         return await AxiosInstance(`${BASE_URL.sailingApi}/app-users/`)
     }
 }
-const events = {}
+const events = {
+    async getMany() {
+        return await AxiosInstance(`${BASE_URL.sailingApi}/events/`)
+    }
+}
 
 
 const sailingApi = {
