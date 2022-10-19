@@ -51,9 +51,35 @@ const UnAuthpages = [
   }
 ];
 
+const admin_settings = [
+  {
+    name: "Create Event",
+    url: "/create-event",
+  },
+  {
+    name: "View all users",
+    url: "/app-users",
+  },
+  {
+    name: "Logout",
+    url: "/login",
+  }
+];
+
+const boat_owner_settings = [
+  {
+    name: "Update boat profile",
+    url: "/boat-profile",
+  },
+  {
+    name: "Logout",
+    url: "/login",
+  }
+];
+
 const crew_settings = [
   {
-    name: "Profile",
+    name: "View Profile",
     url: "/profile",
   },
   {
@@ -65,6 +91,9 @@ const crew_settings = [
 const Navbar = () => {
   const { state, dispatch } = AuthContext.useLogin();
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isCrew, setIsCrew] = useState(false);
+  const [isBoatOwner, setBoatOwner] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -93,9 +122,11 @@ const Navbar = () => {
   React.useEffect(() => {
     const loggedIn = state.access;
     handleCloseUserMenu();
-    console.log(loggedIn);
     setIsLoggedIn(loggedIn);
-    
+    setIsAdmin(loggedIn && LoginUtils.isAdminUser(state.access))
+    setIsCrew(loggedIn && LoginUtils.isCrewUser(state.access))
+    setBoatOwner(loggedIn && LoginUtils.isBoatOwnerUser(state.access))
+    console.log(LoginUtils.isBoatOwnerUser(state.access))
     }, [state]);
 
   return (
@@ -220,7 +251,7 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {crew_settings.map(({name, url}) => (
+              {isCrew ? crew_settings.map(({name, url}) => (
                 <NavLink
                 to={url}
                 style={{ textDecoration: "none", color: "#83314E" }}
@@ -229,7 +260,27 @@ const Navbar = () => {
                     <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
                 </NavLink>
-              ))}
+              )): <div></div>}
+              {isAdmin ? admin_settings.map(({name, url}) => (
+                <NavLink
+                to={url}
+                style={{ textDecoration: "none", color: "#83314E" }}
+                >
+                  <MenuItem key={name} onClick={Logout} onClose={handleCloseUserMenu}>
+                    <Typography textAlign="center">{name}</Typography>
+                  </MenuItem>
+                </NavLink>
+              )): <div></div>}
+              {isBoatOwner ? boat_owner_settings.map(({name, url}) => (
+                <NavLink
+                to={url}
+                style={{ textDecoration: "none", color: "#83314E" }}
+                >
+                  <MenuItem key={name} onClick={Logout} onClose={handleCloseUserMenu}>
+                    <Typography textAlign="center">{name}</Typography>
+                  </MenuItem>
+                </NavLink>
+              )): <div></div>}
             </Menu>
           </Box>: <div></div>}
         </Toolbar>

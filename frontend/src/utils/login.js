@@ -26,22 +26,36 @@ const isLoggedIn = () => {
 };
 
 const isAdminUser = (access) => {
-  //if(typeof access !== "string" || !access) return false;
-  //const {user_role_id} = jwtDecode(access);
-  console.log(access)
-  //return user_role_id === 1;
-}
-
-const isBoatOwnerUser = (access) => {
   if(typeof access !== "string" || !access) return false;
-  const {user_role_id} = jwtDecode(access);
-  return user_role_id === 2;
+  const {roles} = jwtDecode(access);
+  console.log(roles[0].authority);
+  if(roles[0].authority === "ADMIN"){
+  return true;
+  }else{
+    return false;
+  }
 }
 
 const isCrewUser = (access) => {
   if(typeof access !== "string" || !access) return false;
-  const {user_role_id} = jwtDecode(access);
-  return user_role_id === 3;
+  const {roles} = jwtDecode(access);
+  console.log(roles[0].authority);
+  if(roles[0].authority === "CREW"){
+  return true;
+  }else{
+    return false;
+  }
+}
+
+const isBoatOwnerUser = (access) => {
+  if(typeof access !== "string" || !access) return false;
+  const {roles} = jwtDecode(access);
+  console.log(roles[0].authority);
+  if(roles[0].authority === "BOAT_OWNER"){
+  return true;
+  }else{
+    return false;
+  }
 }
 
 const Logout = () => {
@@ -56,6 +70,9 @@ const Logout = () => {
 const TokenUtils = {
   isTokenExpired,
   isLoggedIn,
+  isAdminUser,
+  isCrewUser,
+  isBoatOwnerUser,
   Logout,
 };
 

@@ -15,6 +15,8 @@ const getAuth = () => {
   const removeAuth = () => {
     localStorage.removeItem("jwt");
   };
+
+  
   
   export default {
     getAuth,

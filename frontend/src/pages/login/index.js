@@ -5,6 +5,7 @@ import { LoginUtils } from '../../utils';
 import { AuthContext } from '../../contexts';
 import { Navigation } from "../../constants";
 import "./login.css";
+import jwtDecode from "jwt-decode";
 
     const Login = () => {
     const initialCredentialsState = {
@@ -13,7 +14,7 @@ import "./login.css";
         isLoading: false,
     };
 
-    const LoggedIn = LoginUtils.isLoggedIn();
+    
     const [credentials, setCredentials] = useState(initialCredentialsState);
     const resetFormState = ({...initialCredentialsState});
     const navigate = useNavigate();
@@ -34,6 +35,7 @@ import "./login.css";
                 data: { jwt },
             } = await sailingApi.appUsers.login({ emailAddress: credentials.emailAddress, password: credentials.password });
         TokenService.setAuth(jwt);
+        console.log(jwtDecode(jwt))
         dispatch({
             type: "login",
             jwt,
