@@ -28,11 +28,17 @@ const appUsers = {
     },
     async getMany() {
         return await AxiosInstance(`${BASE_URL.sailingApi}/app-users/`)
+    },
+    async getCurrentUser() {
+        return await AxiosInstance(`${BASE_URL.sailingApi}/app-users/profile`)
     }
 }
 const events = {
     async getMany() {
         return await AxiosInstance(`${BASE_URL.sailingApi}/events/`)
+    },
+    async createEvent(...body) {
+        return await AxiosInstance.post(`${BASE_URL.sailingApi}/events/create`, ...body)
     }
 }
 

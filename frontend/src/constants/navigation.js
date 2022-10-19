@@ -4,5 +4,7 @@ export default {
     BOATS: "/boats",
     CREWS:  "/crews",
     LOGIN: "/login",
-    REGISTER: "/register"
+    REGISTER: "/register",
+    USERPROFILE: "/profile",
+    CREATEEVENT: "create-event"
 }

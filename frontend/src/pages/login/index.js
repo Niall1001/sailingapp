@@ -6,7 +6,8 @@ import { AuthContext } from '../../contexts';
 import { Navigation } from "../../constants";
 import "./login.css";
 import jwtDecode from "jwt-decode";
-
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
     const Login = () => {
     const initialCredentialsState = {
         emailAddress: '',
@@ -40,9 +41,10 @@ import jwtDecode from "jwt-decode";
             type: "login",
             jwt,
           });
+        toast.success('Successfully logged in!');
         navigate(Navigation.HOME);
       }catch (e) {
-        alert('Wrong login Details provided! Please try again');
+        toast.error('Wrong login Details provided! Please try again');
         console.error(e);
         resetFormState();
     } finally {
@@ -54,7 +56,7 @@ import jwtDecode from "jwt-decode";
     };
 
 	return (
-    
+        
         <div class="wrapper">
         <form class="form-signin">       
           <h2 class="form-signin-heading">Please login</h2>
@@ -63,6 +65,7 @@ import jwtDecode from "jwt-decode";
           <button onClick={async () => await loginClicked()} class="btn btn-lg btn-primary btn-block" disabled={credentials.isLoading}>Login</button>   
         </form>
       </div>
+      
     );
 };
 

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -38,6 +39,8 @@ public class EventController {
         return ResponseEntity.ok(eventViewModel);
     }
 
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity CreateEvent(@Valid @RequestBody(required = false) final CreateEventViewModel createEventViewModel){
         final CreateEventDTO createEventDTO = mapper.map(createEventViewModel, CreateEventDTO.class);

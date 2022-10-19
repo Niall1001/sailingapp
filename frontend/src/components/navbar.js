@@ -59,10 +59,6 @@ const admin_settings = [
   {
     name: "View all users",
     url: "/app-users",
-  },
-  {
-    name: "Logout",
-    url: "/login",
   }
 ];
 
@@ -70,10 +66,6 @@ const boat_owner_settings = [
   {
     name: "Update boat profile",
     url: "/boat-profile",
-  },
-  {
-    name: "Logout",
-    url: "/login",
   }
 ];
 
@@ -81,10 +73,6 @@ const crew_settings = [
   {
     name: "View Profile",
     url: "/profile",
-  },
-  {
-    name: "Logout",
-    url: "/login",
   }
 ];
 
@@ -256,7 +244,7 @@ const Navbar = () => {
                 to={url}
                 style={{ textDecoration: "none", color: "#83314E" }}
                 >
-                  <MenuItem key={name} onClick={Logout} onClose={handleCloseUserMenu}>
+                  <MenuItem key={name} onClose={handleCloseUserMenu}>
                     <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
                 </NavLink>
@@ -266,7 +254,7 @@ const Navbar = () => {
                 to={url}
                 style={{ textDecoration: "none", color: "#83314E" }}
                 >
-                  <MenuItem key={name} onClick={Logout} onClose={handleCloseUserMenu}>
+                  <MenuItem key={name} onClose={handleCloseUserMenu}>
                     <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
                 </NavLink>
@@ -276,11 +264,14 @@ const Navbar = () => {
                 to={url}
                 style={{ textDecoration: "none", color: "#83314E" }}
                 >
-                  <MenuItem key={name} onClick={Logout} onClose={handleCloseUserMenu}>
+                  <MenuItem key={name} onClose={handleCloseUserMenu}>
                     <Typography textAlign="center">{name}</Typography>
                   </MenuItem>
                 </NavLink>
               )): <div></div>}
+              <MenuItem key="Logout" onClick={Logout} onClose={handleCloseUserMenu}>
+                    <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>: <div></div>}
         </Toolbar>

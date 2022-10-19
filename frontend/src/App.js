@@ -5,12 +5,15 @@ import {
   Boats,
   Crews,
   Login,
-  Register
+  Register,
+  UserProfile,
+  CreateEvent
 } from "./pages";
 import { Navigation } from "./constants";
 import { Navbar } from "./components";
 import { AuthContext } from "./contexts";
 import { useState, useEffect } from "react";
+import {ToastContainer, toast} from 'react-toastify';
 
 const AuthenticatedRoutes = () => {
   return (
@@ -39,6 +42,16 @@ const AuthenticatedRoutes = () => {
           path={Navigation.LOGIN}
           caseSensitive={false}
           element={<Login />}
+        />
+        <Route
+          path={Navigation.USERPROFILE}
+          caseSensitive={false}
+          element={<UserProfile />}
+        />
+        <Route
+          path={Navigation.CREATEEVENT}
+          caseSensitive={false}
+          element={<CreateEvent />}
         />
       <Route path="*" element={<Navigate to={Navigation.HOME} />} />
     </>
@@ -82,9 +95,20 @@ function App() {
   return (
     <div className="app">
       <Navbar />
-      <Routes>
-      {loggedIn ? AuthenticatedRoutes() : UnAuthenticatedRoutes()}
-      </Routes>
+        <Routes>
+        {loggedIn ? AuthenticatedRoutes() : UnAuthenticatedRoutes()}
+        </Routes>
+        <ToastContainer 
+        position="top-right"
+        autoClose={1250}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"/>
     </div>
   );
 }

@@ -29,7 +29,6 @@ const Register = () => {
         e.preventDefault();
         setCredentials({ ...credentials, isLoading: true });
         try {
-            debugger;
             await sailingApi.appUsers.regsiter({ name: credentials.name ,emailAddress: credentials.emailAddress, dob: credentials.dob, password: credentials.password, user_type: credentials.user_type });
             alert('Successfully Registered!');
             navigate("/login");
