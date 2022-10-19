@@ -19,7 +19,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 import React from "react";
 import { TokenService } from "../services";
 import navigation from "../constants/navigation";
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Authpages = [
   {
@@ -105,6 +106,7 @@ const Navbar = () => {
     navigate(navigation.LOGIN);
     setIsLoggedIn(false);
     TokenService.removeAuth();
+    toast.success("Successfully logged out")
   }
 
   React.useEffect(() => {
@@ -114,7 +116,6 @@ const Navbar = () => {
     setIsAdmin(loggedIn && LoginUtils.isAdminUser(state.access))
     setIsCrew(loggedIn && LoginUtils.isCrewUser(state.access))
     setBoatOwner(loggedIn && LoginUtils.isBoatOwnerUser(state.access))
-    console.log(LoginUtils.isBoatOwnerUser(state.access))
     }, [state]);
 
   return (

@@ -6,5 +6,6 @@ export default {
     LOGIN: "/login",
     REGISTER: "/register",
     USERPROFILE: "/profile",
-    CREATEEVENT: "create-event"
+    CREATEEVENT: "/create-event",
+    VIEWUSERS: "/app-users"
 }

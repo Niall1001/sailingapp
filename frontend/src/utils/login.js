@@ -28,7 +28,6 @@ const isLoggedIn = () => {
 const isAdminUser = (access) => {
   if(typeof access !== "string" || !access) return false;
   const {roles} = jwtDecode(access);
-  console.log(roles[0].authority);
   if(roles[0].authority === "ADMIN"){
   return true;
   }else{
@@ -39,7 +38,6 @@ const isAdminUser = (access) => {
 const isCrewUser = (access) => {
   if(typeof access !== "string" || !access) return false;
   const {roles} = jwtDecode(access);
-  console.log(roles[0].authority);
   if(roles[0].authority === "CREW"){
   return true;
   }else{
@@ -50,7 +48,6 @@ const isCrewUser = (access) => {
 const isBoatOwnerUser = (access) => {
   if(typeof access !== "string" || !access) return false;
   const {roles} = jwtDecode(access);
-  console.log(roles[0].authority);
   if(roles[0].authority === "BOAT_OWNER"){
   return true;
   }else{

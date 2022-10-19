@@ -6,8 +6,9 @@ import { AuthContext } from '../../contexts';
 import { Navigation } from "../../constants";
 import "./login.css";
 import jwtDecode from "jwt-decode";
-import {ToastContainer, toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
     const Login = () => {
     const initialCredentialsState = {
         emailAddress: '',

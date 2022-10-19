@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { sailingApi } from '../../services';
 import { useNavigate } from 'react-router-dom';
-
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const initialCredentialsState = {
@@ -30,10 +31,10 @@ const Register = () => {
         setCredentials({ ...credentials, isLoading: true });
         try {
             await sailingApi.appUsers.regsiter({ name: credentials.name ,emailAddress: credentials.emailAddress, dob: credentials.dob, password: credentials.password, user_type: credentials.user_type });
-            alert('Successfully Registered!');
+            toast.success('Successfully Registered!');
             navigate("/login");
         } catch (e) {
-            alert('something went wrong!');
+            toast.error('something went wrong!');
             console.error(e);
             resetFormState();
         } finally {

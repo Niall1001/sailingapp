@@ -7,7 +7,8 @@ import {
   Login,
   Register,
   UserProfile,
-  CreateEvent
+  CreateEvent,
+  ViewUsers
 } from "./pages";
 import { Navigation } from "./constants";
 import { Navbar } from "./components";
@@ -52,6 +53,11 @@ const AuthenticatedRoutes = () => {
           path={Navigation.CREATEEVENT}
           caseSensitive={false}
           element={<CreateEvent />}
+        />
+        <Route
+          path={Navigation.VIEWUSERS}
+          caseSensitive={false}
+          element={<ViewUsers />}
         />
       <Route path="*" element={<Navigate to={Navigation.HOME} />} />
     </>
