@@ -19,6 +19,7 @@ const Events = () => {
 		try{
 			const {data} = await sailingApi.appUsers.getMany();
 			setCrew(data);
+			console.log(data);
 		}catch(error){
 			setError(true);
             console.log(error);

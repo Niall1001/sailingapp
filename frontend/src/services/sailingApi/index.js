@@ -24,7 +24,10 @@ const appUsers = {
         return await axios.post(`${BASE_URL.sailingApiVersion}/login`, ...body)
     },
     async regsiter(...body){
-        return await axios.post(`${BASE_URL.sailingApi}/app-users/create`, ...body)
+        return await axios.post(`${BASE_URL.sailingApi}/app-users/create/`, ...body)
+    },
+    async update(id, ...body){
+        return await AxiosInstance.put(`${BASE_URL.sailingApi}/app-users/${id}`, ...body)
     },
     async getMany() {
         return await AxiosInstance(`${BASE_URL.sailingApi}/app-users/`)

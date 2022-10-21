@@ -49,7 +49,8 @@ public class WebSecurityConfiguration {
                                 "/webjars/**",
                                 "/swagger-resources/configuration/ui",
                                 "/swagger-ui.html",
-                                "/v1/login/**")
+                                "/v1/login/**",
+                                "/app-users/create/")
                         .permitAll()
                         .anyRequest()
                         .authenticated();

@@ -58,15 +58,17 @@ public class AppUserService {
     public AppUserDTO updateAppUser(final int id, final UpdateAppUserViewModel updateAppUserViewModel){
         final AppUser appUser = appUserRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("App user cannot be found, ensure the user exists before updating."));
         mapper.map(updateAppUserViewModel, appUser);
-        appUser.setPassword(bCryptPasswordEncoder.encode(updateAppUserViewModel.getPassword()));
+        if(updateAppUserViewModel.getPassword() == null){
+            appUser.setPassword(appUser.getPassword());
+        }else {
+            appUser.setPassword(bCryptPasswordEncoder.encode(updateAppUserViewModel.getPassword()));
+        }
         if(updateAppUserViewModel.getUser_type() == 1)
             appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, ADMIN_USER));
         else if(updateAppUserViewModel.getUser_type() == 2)
             appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, BOAT_OWNER_USER));
         else if(updateAppUserViewModel.getUser_type() == 3)
             appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, CREW_USER));
-        else
-            appUser.setUserAccessStatus(entityManager.getReference(UserAccessStatus.class, ACTIVE_USER_STATUS));
         appUserRepository.save(appUser);
         return mapper.map(appUser, AppUserDTO.class);}
     public void deleteAppUser(final int id){

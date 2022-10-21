@@ -22,7 +22,6 @@ public class CreateAppUserViewModel {
 
     private Date dob;
 
-    @NotEmpty
     @Size(min = 1, max = 255)
     private String password;
     private int user_type;
