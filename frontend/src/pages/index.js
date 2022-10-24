@@ -7,3 +7,4 @@ export { default as Register } from './register';
 export { default as UserProfile } from './userprofile';
 export { default as CreateEvent } from './createevent';
 export { default as ViewUsers } from './viewusers';
+export { default as BoatUser } from './boatuserpage';

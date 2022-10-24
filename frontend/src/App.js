@@ -8,7 +8,8 @@ import {
   Register,
   UserProfile,
   CreateEvent,
-  ViewUsers
+  ViewUsers,
+  BoatUser
 } from "./pages";
 import { Navigation } from "./constants";
 import { Navbar } from "./components";
@@ -58,6 +59,11 @@ const AuthenticatedRoutes = () => {
           path={Navigation.VIEWUSERS}
           caseSensitive={false}
           element={<ViewUsers />}
+        />
+        <Route
+          path={Navigation.BOATPAGE}
+          caseSensitive={false}
+          element={<BoatUser />}
         />
       <Route path="*" element={<Navigate to={Navigation.HOME} />} />
     </>
