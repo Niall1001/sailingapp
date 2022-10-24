@@ -6,6 +6,7 @@ import './userprofile.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { TokenService } from "../../services";
 
 const UserProfile = () => {
 	const [userProfile, setUserProfile] = useState();
@@ -22,6 +23,9 @@ const UserProfile = () => {
     const navigate = useNavigate();
 	const [credentials, setCredentials] = useState(initialCredentialsState);
 
+	const Logout = () => {
+			TokenService.removeAuth();
+	}
 	const EditClick = () => {
 		setEdit(true);
 	}
@@ -43,8 +47,10 @@ const UserProfile = () => {
         e.preventDefault();
         setCredentials({ ...credentials, isLoading: true });
         try {
-            await sailingApi.appUsers.update(userProfile.id, { name: credentials.name ,emailAddress: credentials.emailAddress, dob: credentials.dob});
+			const {name, emailAddress, dob} = credentials;
+            await sailingApi.appUsers.update(userProfile.id, { name, emailAddress, dob });
             toast.success('Successfully Updated User profile!');
+			Logout();
             navigate("/login");
         } catch (e) {
             toast.error('Uh-oh! Something went wrong!');

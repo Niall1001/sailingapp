@@ -65,8 +65,8 @@ const admin_settings = [
 
 const boat_owner_settings = [
   {
-    name: "Update boat profile",
-    url: "/boat-profile",
+    name: "View Boat Page",
+    url: "/boat-page",
   }
 ];
 
