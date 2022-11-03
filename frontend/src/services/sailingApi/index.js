@@ -10,14 +10,17 @@ const boats = {
         return await AxiosInstance(`${BASE_URL.sailingApi}/boats/`)
     },
     async createOne(body) {
-        return await axios.post(`${BASE_URL.sailingApi}/boats/create`)
+        return await axios.post(`${BASE_URL.sailingApi}/boats/create`, ...body)
     },
     async updateOne(id, body) {
-        return await axios.put(`${BASE_URL.sailingApi}/boats/${id}`)
+        return await axios.put(`${BASE_URL.sailingApi}/boats/${id}`, ...body)
     },
     async deleteOne(id) {
         return await axios.delete(`${BASE_URL.sailingApi}/boats/${id}`)
     },
+    async getByOwner(id) {
+        return await AxiosInstance(`${BASE_URL.sailingApi}/boats/owner/${id}`)
+    }
 }
 const appUsers = {
     async login(...body) {
